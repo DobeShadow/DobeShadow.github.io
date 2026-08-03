@@ -4,7 +4,7 @@ import { onMounted, ref } from 'vue'
 const container = ref<HTMLElement>()
 let map: any = null
 
-// 城市：英文名 / 边界数据文件（docs/public/geo/）/ 日期 / 照片URL / 一句话（date/photo/text 可留空）
+// 城市：英文名 / 边界数据文件 / 日期 / 照片 / 一段话（date/photo/text 可留空）
 const cities = [
   { name: 'Nanjing', file: 'Nanjing', date: '', photo: '', text: '' },
   { name: 'Wuhan', file: 'Wuhan', date: '', photo: '', text: '' },
@@ -15,13 +15,46 @@ const cities = [
   { name: 'Ganzhou', file: 'Ganzhou', date: '', photo: '', text: '' }
 ]
 
-function popupHTML(m) {
+// 精确景点：英文名 / 中文名 / 经度 / 纬度 / 日期 / 照片URL / 地址 / 编码
+// 可留空，等你告诉我每个景点的具体数据再填
+const spots = [
+  {
+    name: 'Sun Yat-sen Mausoleum',
+    cn: '中山陵',
+    lng: 118.848,
+    lat: 32.045,
+    date: '2024-05-01',
+    photo: '',
+    addr: 'Xuanwu District, Nanjing, China',
+    code: '320101'
+  }
+]
+
+// 蓝色定位针 SVG
+const PIN_SVG = `
+<svg viewBox="0 0 24 32" width="28" height="36" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12 0 C5.4 0 0 5.4 0 12 C0 22 12 32 12 32 C12 32 24 22 24 12 C24 5.4 18.6 0 12 0 Z"
+    fill="#3b82f6" stroke="#fff" stroke-width="1.5"/>
+  <circle cx="12" cy="12" r="4" fill="#fff"/>
+</svg>`
+
+function cityPopupHTML(m) {
   const photo = m.photo
     ? `<div class="map-popup-photo"><img src="${m.photo}" alt="${m.name}" /></div>`
     : ''
   const date = m.date ? `<div class="map-popup-date">${m.date}</div>` : ''
   const text = m.text ? `<p class="map-popup-text">${m.text}</p>` : ''
   return `<div class="map-popup">${photo}<div class="map-popup-head"><strong>${m.name}</strong></div>${date}${text}</div>`
+}
+
+function spotPopupHTML(s) {
+  const photo = s.photo
+    ? `<div class="spot-photo"><img src="${s.photo}" alt="${s.cn || s.name}" /></div>`
+    : `<div class="spot-photo spot-photo-empty"></div>`
+  const date = s.date ? `<div class="spot-date">${s.date}</div>` : ''
+  const addr = s.addr ? `<div class="spot-addr">${s.addr}</div>` : ''
+  const code = s.code ? `<div class="spot-code">编码: ${s.code}</div>` : ''
+  return `<div class="spot-card">${photo}<div class="spot-body"><div class="spot-title">${s.cn || s.name}</div>${date}${addr}${code}</div></div>`
 }
 
 onMounted(async () => {
@@ -42,7 +75,7 @@ onMounted(async () => {
     zoom: 2.8,
     center: [114.5, 29.5],
     minZoom: 1,
-    maxZoom: 10,
+    maxZoom: 18,
     pitch: 0,
     attributionControl: false
   })
@@ -58,7 +91,7 @@ onMounted(async () => {
       'star-intensity': 0.8
     })
 
-    // 加载城市行政边界 GeoJSON（阿里 DataV，docs/public/geo/）
+    // 行政边界高亮
     let features = []
     try {
       const results = await Promise.all(
@@ -78,29 +111,18 @@ onMounted(async () => {
       type: 'geojson',
       data: { type: 'FeatureCollection', features }
     })
-
-    // 区域填充（半透明蓝，按真实行政区划）
     map.addLayer({
       id: 'city-fill',
       type: 'fill',
       source: 'city-zones',
-      paint: {
-        'fill-color': '#3b82f6',
-        'fill-opacity': 0.25
-      }
+      paint: { 'fill-color': '#3b82f6', 'fill-opacity': 0.22 }
     })
-    // 区域描边（城市规划线）
     map.addLayer({
       id: 'city-line',
       type: 'line',
       source: 'city-zones',
-      paint: {
-        'line-color': '#60a5fa',
-        'line-width': 1.2,
-        'line-opacity': 0.9
-      }
+      paint: { 'line-color': '#60a5fa', 'line-width': 1.2, 'line-opacity': 0.9 }
     })
-    // 城市名
     map.addLayer({
       id: 'city-label',
       type: 'symbol',
@@ -117,16 +139,29 @@ onMounted(async () => {
       }
     })
 
-    // 点击区域弹窗
+    // 精确景点蓝色大头针
+    spots.forEach((s) => {
+      const el = document.createElement('div')
+      el.className = 'map-pin'
+      el.innerHTML = PIN_SVG
+      new mapboxgl.Marker({ element: el, anchor: 'bottom' })
+        .setLngLat([s.lng, s.lat])
+        .setPopup(
+          new mapboxgl.Popup({ offset: 32, closeButton: false, maxWidth: '320px' }).setHTML(spotPopupHTML(s))
+        )
+        .addTo(map)
+    })
+
+    // 点击行政区域弹窗
     map.on('click', 'city-fill', (e) => {
       if (!e.features || !e.features.length) return
       const f = e.features[0]
       const city = cities.find((c) => c.name === f.properties.cityKey)
       if (!city) return
-      const center = f.properties.center || f.properties.centroid || [city.lng, city.lat]
+      const center = f.properties.center || f.properties.centroid || [0, 0]
       new mapboxgl.Popup({ closeButton: false, maxWidth: '280px' })
         .setLngLat(center)
-        .setHTML(popupHTML(city))
+        .setHTML(cityPopupHTML(city))
         .addTo(map)
     })
     map.on('mouseenter', 'city-fill', () => {
@@ -142,7 +177,7 @@ onMounted(async () => {
 <template>
   <div class="map-wrap">
     <div ref="container" class="map-container"></div>
-    <div class="map-hint">Drag to rotate · Scroll to zoom · Click a highlighted region</div>
+    <div class="map-hint">Drag to rotate · Scroll to zoom · Click a pin for details</div>
   </div>
 </template>
 
