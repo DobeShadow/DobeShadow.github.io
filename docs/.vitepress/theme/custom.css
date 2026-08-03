@@ -1,0 +1,190 @@
+/* ============================================
+   DobeShadow blog — minimal, high-end theme
+   antfu-inspired: black & white, generous spacing
+   ============================================ */
+
+:root {
+  --vp-c-brand-1: #2563eb;
+  --vp-c-brand-2: #3b82f6;
+  --vp-c-brand-3: #1d4ed8;
+  --vp-c-brand-soft: rgba(37, 99, 235, 0.08);
+
+  --vp-font-family-base: 'Inter', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+  --vp-font-family-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+
+  --vp-c-bg: #ffffff;
+  --vp-c-bg-alt: #fafafa;
+  --vp-c-bg-soft: #f7f7f7;
+  --vp-c-divider: #ececec;
+  --vp-c-text-1: #18181b;
+  --vp-c-text-2: #52525b;
+  --vp-c-text-3: #a1a1aa;
+}
+
+.dark {
+  --vp-c-bg: #0c0c0e;
+  --vp-c-bg-alt: #121215;
+  --vp-c-bg-soft: #17171a;
+  --vp-c-divider: #26262b;
+  --vp-c-text-1: #f4f4f5;
+  --vp-c-text-2: #a1a1aa;
+  --vp-c-text-3: #71717a;
+}
+
+/* Navigation — clean & minimal */
+.VPNavBar {
+  border-bottom: 1px solid var(--vp-c-divider);
+  background: transparent;
+  backdrop-filter: blur(8px);
+}
+.VPNavBar .title {
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.VPNavBarMenuLink {
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+/* Page container — generous spacing */
+.VPDoc .container {
+  max-width: 720px !important;
+}
+.VPDoc .content-container {
+  padding-top: 40px;
+}
+
+/* Typography */
+.vp-doc h1 {
+  font-size: 2.1rem;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  margin-bottom: 8px;
+}
+.vp-doc h2 {
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  border-top: none;
+  margin-top: 48px;
+  padding-top: 0;
+}
+.vp-doc h3 {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+.vp-doc p,
+.vp-doc li {
+  line-height: 1.85;
+  color: var(--vp-c-text-2);
+}
+.vp-doc strong {
+  color: var(--vp-c-text-1);
+  font-weight: 500;
+}
+
+/* Links */
+.vp-doc a {
+  color: var(--vp-c-brand-1);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+.vp-doc a:hover {
+  border-bottom-color: var(--vp-c-brand-1);
+}
+
+/* Inline code */
+.vp-doc code {
+  font-size: 0.85em;
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-1);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 5px;
+  padding: 2px 6px;
+}
+.vp-doc div[class*='language-'] {
+  border-radius: 10px;
+  border: 1px solid var(--vp-c-divider);
+  background: var(--vp-c-bg-soft);
+}
+
+/* Tables — subtle */
+.vp-doc table {
+  width: 100%;
+  font-size: 0.9rem;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.vp-doc th {
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-1);
+  font-weight: 500;
+  border: none;
+  padding: 10px 14px;
+  text-align: left;
+}
+.vp-doc td {
+  border: none;
+  border-top: 1px solid var(--vp-c-divider);
+  padding: 10px 14px;
+  color: var(--vp-c-text-2);
+}
+
+/* Custom blocks — flat & quiet */
+.vp-doc .custom-block {
+  border-radius: 8px;
+  font-size: 0.9rem;
+  border: 1px solid var(--vp-c-divider);
+  background: var(--vp-c-bg-soft);
+}
+.vp-doc .custom-block.tip {
+  border-color: #bfdbfe;
+  background: #eff6ff;
+  color: var(--vp-c-text-2);
+}
+.vp-doc .custom-block.warning {
+  border-color: #fde68a;
+  background: #fffbeb;
+}
+.vp-doc .custom-block.danger {
+  border-color: #fecaca;
+  background: #fef2f2;
+}
+
+/* Post page header */
+.doc-header {
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+.doc-title {
+  font-size: 2.1rem;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+}
+
+/* Home sections */
+.home-section {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.home-section-title {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--vp-c-text-3);
+  margin: 48px 0 8px;
+}
+
+/* Footer */
+.VPFooter {
+  border-top: 1px solid var(--vp-c-divider);
+}
+.VPFooter .container {
+  max-width: 720px;
+}
