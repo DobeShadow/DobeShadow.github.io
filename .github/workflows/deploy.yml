@@ -32,6 +32,8 @@ jobs:
         uses: actions/configure-pages@v4
       - name: Install dependencies
         run: npm ci
+      - name: Write Mapbox token env
+        run: echo "VITE_MAPBOX_TOKEN=${{ secrets.MAPBOX_TOKEN }}" > docs/.env.local
       - name: Build with VitePress
         run: npm run docs:build
       - name: Upload artifact

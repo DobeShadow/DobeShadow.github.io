@@ -214,3 +214,14 @@
 .VPFooter .container {
   max-width: 720px;
 }
+
+/* Map page — fullscreen globe */
+.map-page .VPDoc {
+  padding: 0 !important;
+}
+.map-page .VPDoc .container {
+  max-width: 100% !important;
+}
+.map-page .VPDoc .content-container {
+  padding: 0 !important;
+}

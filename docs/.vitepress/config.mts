@@ -18,7 +18,8 @@ export default defineConfig({
       { text: 'Home', link: '/' },
       { text: 'About', link: '/about' },
       { text: 'Posts', link: '/posts' },
-      { text: 'Projects', link: '/projects' }
+      { text: 'Projects', link: '/projects' },
+      { text: 'Map', link: '/map' }
     ],
     footer: {
       message: 'Built with VitePress',
