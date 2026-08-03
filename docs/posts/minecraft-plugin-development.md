@@ -1,6 +1,6 @@
 ---
 title: My Journey Building Minecraft Plugins
-date: 2026-07-28
+date: 2026-07-24 21:10:00
 tags: [Minecraft, Java, Development]
 ---
 

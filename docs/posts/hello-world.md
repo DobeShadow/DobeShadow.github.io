@@ -1,6 +1,6 @@
 ---
 title: Hello, World!
-date: 2026-08-03
+date: 2026-08-03 14:05:00
 tags: [Life, Blog]
 ---
 

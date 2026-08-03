@@ -1,6 +1,6 @@
 ---
 title: Preparing for Graduate School in Materials Science
-date: 2026-07-15
+date: 2026-07-15 12:40:00
 tags: [Academics, Materials]
 ---
 
