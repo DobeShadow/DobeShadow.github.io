@@ -12,6 +12,7 @@ const cities = [
   { name: 'Nanchang', file: 'Nanchang', date: '', photo: '', text: '' },
   { name: 'Jiujiang', file: 'Jiujiang', date: '', photo: '', text: '' },
   { name: 'Jingdezhen', file: 'Jingdezhen', date: '', photo: '', text: '' },
+  { name: 'Pingxiang', file: 'Pingxiang', date: '', photo: '', text: '' },
   { name: 'Ganzhou', file: 'Ganzhou', date: '', photo: '', text: '' }
 ]
 
