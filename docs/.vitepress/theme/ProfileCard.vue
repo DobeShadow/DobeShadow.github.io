@@ -1,18 +1,18 @@
 <script setup lang="ts">
-const avatar = 'https://github.com/DobeShadow.png'
+const avatar = '/avatar.jpg'
 const links = [
   { name: 'GitHub', url: 'https://github.com/DobeShadow' },
   { name: 'Bilibili', url: 'https://space.bilibili.com/500599397' },
-  { name: 'Email', url: 'mailto:3064838649@qq.com' },
-  { name: 'MINEMC', url: 'http://www.minemc.asia/' },
-  { name: '爱发电', url: 'https://ifdian.net/a/dobeshadow' }
+  { name: 'Email', url: 'mailto:3064838649@qq.com' }
+  // { name: 'MINEMC', url: 'http://www.minemc.asia/' },
+  // { name: '爱发电', url: 'https://ifdian.net/a/dobeshadow' }
 ]
 </script>
 
 <template>
   <div class="profile-card">
     <img class="avatar" :src="avatar" alt="avatar" />
-    <h3 class="name">余枫的BLOG</h3>
+    <h3 class="name">余枫</h3>
     <p class="role">Materials &amp; Chemical Engineering<br />Minecraft plugin developer</p>
     <p class="bio">
       Preparing for graduate school, building Minecraft plugins and running the MINEMC
