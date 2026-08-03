@@ -4,15 +4,29 @@ import { onMounted, ref } from 'vue'
 const container = ref<HTMLElement>()
 let map: any = null
 
-// 标记点：名字 / 经度 / 纬度 / 日期 / 照片URL / 一句话（date/photo/text 可留空，之后补）
-const markers = [
-  { name: 'Nanjing', lng: 118.80, lat: 32.06, date: '', photo: '', text: '' },
-  { name: 'Wuhan', lng: 114.31, lat: 30.59, date: '', photo: '', text: '' },
-  { name: 'Changsha', lng: 112.94, lat: 28.23, date: '', photo: '', text: '' },
-  { name: 'Nanchang', lng: 115.86, lat: 28.68, date: '', photo: '', text: '' },
-  { name: 'Jingdezhen', lng: 117.18, lat: 29.27, date: '', photo: '', text: '' },
-  { name: 'Ganzhou', lng: 115.93, lat: 25.83, date: '', photo: '', text: '' }
+// 城市区域：名字 / 经度 / 纬度 / 高亮半径(km) / 日期 / 照片URL / 一句话（date/photo/text 可留空）
+const cities = [
+  { name: 'Nanjing', lng: 118.80, lat: 32.06, radius: 40, date: '', photo: '', text: '' },
+  { name: 'Wuhan', lng: 114.31, lat: 30.59, radius: 45, date: '', photo: '', text: '' },
+  { name: 'Changsha', lng: 112.94, lat: 28.23, radius: 40, date: '', photo: '', text: '' },
+  { name: 'Nanchang', lng: 115.86, lat: 28.68, radius: 40, date: '', photo: '', text: '' },
+  { name: 'Jiujiang', lng: 115.97, lat: 29.71, radius: 35, date: '', photo: '', text: '' },
+  { name: 'Jingdezhen', lng: 117.18, lat: 29.27, radius: 35, date: '', photo: '', text: '' },
+  { name: 'Ganzhou', lng: 115.93, lat: 25.83, radius: 40, date: '', photo: '', text: '' }
 ]
+
+// 以城市为中心生成近圆形多边形（每边约 1.1 倍经度/纬度换算）
+function circlePolygon(lng, lat, radiusKm, points = 36) {
+  const dLat = radiusKm / 110.574
+  const dLng = radiusKm / (111.32 * Math.cos((lat * Math.PI) / 180))
+  const coords = []
+  for (let i = 0; i < points; i++) {
+    const a = (i / points) * 2 * Math.PI
+    coords.push([lng + dLng * Math.cos(a), lat + dLat * Math.sin(a)])
+  }
+  coords.push(coords[0]) // 闭合
+  return coords
+}
 
 function popupHTML(m) {
   const photo = m.photo
@@ -38,10 +52,10 @@ onMounted(async () => {
     container: container.value!,
     style: 'mapbox://styles/mapbox/dark-v11',
     projection: 'globe',
-    zoom: 1.2,
-    center: [105, 30],
-    minZoom: 0.4,
-    maxZoom: 8,
+    zoom: 2.6,
+    center: [114.5, 29.5],
+    minZoom: 1,
+    maxZoom: 9,
     pitch: 0,
     attributionControl: false
   })
@@ -56,31 +70,77 @@ onMounted(async () => {
       'space-color': 'rgb(5, 6, 12)',
       'star-intensity': 0.8
     })
-  })
 
-  markers.forEach((m) => {
-    const el = document.createElement('div')
-    el.className = 'map-dot'
-    // Inline styles as ultimate fallback so the dot is always visible
-    // regardless of CSS scoping / mapbox-gl.css availability
-    Object.assign(el.style, {
-      position: 'relative',
-      width: '16px',
-      height: '16px',
-      borderRadius: '50%',
-      background: '#3b82f6',
-      border: '2px solid #fff',
-      cursor: 'pointer',
-      boxShadow: '0 0 14px rgba(59, 130, 246, 1), 0 0 28px rgba(59, 130, 246, 0.5)',
-      zIndex: '10'
+    // GeoJSON：每个城市一个高亮区域
+    const geojson = {
+      type: 'FeatureCollection',
+      features: cities.map((c) => ({
+        type: 'Feature',
+        geometry: {
+          type: 'Polygon',
+          coordinates: [circlePolygon(c.lng, c.lat, c.radius)]
+        },
+        properties: { name: c.name, lng: c.lng, lat: c.lat }
+      }))
+    }
+
+    map.addSource('city-zones', { type: 'geojson', data: geojson })
+
+    // 区域填充（半透明蓝）
+    map.addLayer({
+      id: 'city-fill',
+      type: 'fill',
+      source: 'city-zones',
+      paint: {
+        'fill-color': '#3b82f6',
+        'fill-opacity': 0.22
+      }
     })
-    const pulse = document.createElement('div')
-    pulse.className = 'map-pulse'
-    el.appendChild(pulse)
-    new mapboxgl.Marker({ element: el })
-      .setLngLat([m.lng, m.lat])
-      .setPopup(new mapboxgl.Popup({ offset: 24, closeButton: false, maxWidth: '280px' }).setHTML(popupHTML(m)))
-      .addTo(map)
+    // 区域描边
+    map.addLayer({
+      id: 'city-line',
+      type: 'line',
+      source: 'city-zones',
+      paint: {
+        'line-color': '#60a5fa',
+        'line-width': 1.5,
+        'line-opacity': 0.9
+      }
+    })
+    // 城市名
+    map.addLayer({
+      id: 'city-label',
+      type: 'symbol',
+      source: 'city-zones',
+      layout: {
+        'text-field': ['get', 'name'],
+        'text-size': 12,
+        'text-letter-spacing': 0.05
+      },
+      paint: {
+        'text-color': '#dbeafe',
+        'text-halo-color': '#0e0e12',
+        'text-halo-width': 1.5
+      }
+    })
+
+    // 点击区域弹窗
+    map.on('click', 'city-fill', (e) => {
+      if (!e.features || !e.features.length) return
+      const f = e.features[0]
+      const city = cities.find((c) => c.name === f.properties.name)
+      if (!city) return
+      new mapboxgl.Popup({ closeButton: false, maxWidth: '280px' })
+        .setLngLat([city.lng, city.lat])
+        .setHTML(popupHTML(city))
+        .addTo(map)
+    })
+    map.on('mouseenter', 'city-fill', () => {
+      map.getCanvas().style.cursor = 'pointer'
+    })
+    map.on('mouseleave', 'city-fill', () => {
+      map.getCanvas().style.cursor = ''
+    })
   })
 })
 </script>
@@ -88,7 +148,7 @@ onMounted(async () => {
 <template>
   <div class="map-wrap">
     <div ref="container" class="map-container"></div>
-    <div class="map-hint">Drag to rotate · Scroll to zoom · Click a marker</div>
+    <div class="map-hint">Drag to rotate · Scroll to zoom · Click a highlighted region</div>
   </div>
 </template>
 
