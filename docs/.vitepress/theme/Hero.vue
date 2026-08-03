@@ -10,7 +10,7 @@ const socials = [
 
 <template>
   <div class="hero">
-    <h1 class="hero-name">DobeShadow</h1>
+    <h1 class="hero-name">余枫的BLOG</h1>
     <p class="hero-tagline">
       Materials &amp; Chemical Engineering student · Minecraft plugin developer
     </p>

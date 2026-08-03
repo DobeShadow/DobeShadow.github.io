@@ -4,8 +4,8 @@ export default defineConfig({
   // Deployed at the user-page root: https://dobeshadow.github.io/
   base: '/',
   lang: 'en-US',
-  title: 'DobeShadow',
-  description: 'DobeShadow - Materials & Chemical Engineering student, Minecraft plugin developer',
+  title: '余枫的BLOG',
+  description: '余枫的BLOG - Materials & Chemical Engineering student, Minecraft plugin developer',
   cleanUrls: true,
   appearance: true,
   head: [
