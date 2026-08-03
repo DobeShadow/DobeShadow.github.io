@@ -4,15 +4,24 @@ import { onMounted, ref } from 'vue'
 const container = ref<HTMLElement>()
 let map: any = null
 
-// 标记点：名字 / 经度 / 纬度 / 描述（可自行增删修改）
+// 标记点：名字 / 经度 / 纬度 / 日期 / 照片URL / 一句话（date/photo/text 可留空，之后补）
 const markers = [
-  { name: 'Nanjing', lng: 118.80, lat: 32.06, note: '南京' },
-  { name: 'Wuhan', lng: 114.31, lat: 30.59, note: '武汉' },
-  { name: 'Changsha', lng: 112.94, lat: 28.23, note: '长沙' },
-  { name: 'Nanchang', lng: 115.86, lat: 28.68, note: '南昌' },
-  { name: 'Jingdezhen', lng: 117.18, lat: 29.27, note: '景德镇' },
-  { name: 'Ganzhou', lng: 115.93, lat: 25.83, note: '赣州' }
+  { name: 'Nanjing', lng: 118.80, lat: 32.06, date: '', photo: '', text: '' },
+  { name: 'Wuhan', lng: 114.31, lat: 30.59, date: '', photo: '', text: '' },
+  { name: 'Changsha', lng: 112.94, lat: 28.23, date: '', photo: '', text: '' },
+  { name: 'Nanchang', lng: 115.86, lat: 28.68, date: '', photo: '', text: '' },
+  { name: 'Jingdezhen', lng: 117.18, lat: 29.27, date: '', photo: '', text: '' },
+  { name: 'Ganzhou', lng: 115.93, lat: 25.83, date: '', photo: '', text: '' }
 ]
+
+function popupHTML(m) {
+  const photo = m.photo
+    ? `<div class="map-popup-photo"><img src="${m.photo}" alt="${m.name}" /></div>`
+    : ''
+  const date = m.date ? `<div class="map-popup-date">${m.date}</div>` : ''
+  const text = m.text ? `<p class="map-popup-text">${m.text}</p>` : ''
+  return `<div class="map-popup">${photo}<div class="map-popup-head"><strong>${m.name}</strong></div>${date}${text}</div>`
+}
 
 onMounted(async () => {
   if (typeof window === 'undefined') return
@@ -54,11 +63,7 @@ onMounted(async () => {
     el.innerHTML = '<div class="map-pulse"></div>'
     new mapboxgl.Marker({ element: el })
       .setLngLat([m.lng, m.lat])
-      .setPopup(
-        new mapboxgl.Popup({ offset: 20, closeButton: false }).setHTML(
-          `<strong>${m.name}</strong><br/><span class="map-note">${m.note}</span>`
-        )
-      )
+      .setPopup(new mapboxgl.Popup({ offset: 24, closeButton: false, maxWidth: '280px' }).setHTML(popupHTML(m)))
       .addTo(map)
   })
 })
@@ -67,7 +72,7 @@ onMounted(async () => {
 <template>
   <div class="map-wrap">
     <div ref="container" class="map-container"></div>
-    <div class="map-hint">Drag to rotate · Scroll to zoom</div>
+    <div class="map-hint">Drag to rotate · Scroll to zoom · Click a marker</div>
   </div>
 </template>
 
@@ -81,19 +86,23 @@ onMounted(async () => {
   height: 100%;
 }
 .map-dot {
-  width: 14px;
-  height: 14px;
+  position: relative;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   background: #3b82f6;
   border: 2px solid #fff;
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.8);
   cursor: pointer;
+  z-index: 2;
 }
 .map-pulse {
   position: absolute;
-  inset: -6px;
+  inset: -8px;
   border-radius: 50%;
-  border: 2px solid rgba(59, 130, 246, 0.5);
+  border: 2px solid rgba(59, 130, 246, 0.6);
   animation: map-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  z-index: 1;
 }
 @keyframes map-ping {
   0% {
@@ -105,10 +114,6 @@ onMounted(async () => {
     transform: scale(2.2);
     opacity: 0;
   }
-}
-.map-note {
-  color: #52525b;
-  font-size: 12px;
 }
 .map-hint {
   position: absolute;
@@ -123,6 +128,8 @@ onMounted(async () => {
   border-radius: 999px;
   backdrop-filter: blur(4px);
   pointer-events: none;
+  z-index: 3;
+  white-space: nowrap;
 }
 .map-token-hint {
   height: 100%;
