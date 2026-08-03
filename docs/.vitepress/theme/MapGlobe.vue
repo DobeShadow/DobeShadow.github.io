@@ -21,10 +21,10 @@ const spots = [
   {
     name: 'Jiyang Tower',
     cn: '洎阳楼',
-    lng: 117.129,
-    lat: 28.961,
+    lng: 117.135561,
+    lat: 28.956879,
     date: '2026-08-02',
-    photo: '/photos/01-lp-jyyang-tower.jpg',
+    photo: 'https://cdn.jsdelivr.net/gh/DobeShadow/DobeShadow.github.io@main/docs/public/photos/01-lp-jyyang-tower.jpg',
     addr: 'Leping, Jingdezhen area, Jiangxi, China',
     code: '360281',
     city: 'Jingdezhen'
@@ -32,10 +32,10 @@ const spots = [
   {
     name: 'Jiangxi Provincial Art Museum',
     cn: '江西省美术馆',
-    lng: 115.882,
-    lat: 28.685,
+    lng: 115.902607,
+    lat: 28.673862,
     date: '2023-05-13',
-    photo: '/photos/02-nanchang-art-museum.jpg',
+    photo: 'https://cdn.jsdelivr.net/gh/DobeShadow/DobeShadow.github.io@main/docs/public/photos/02-nanchang-art-museum.jpg',
     addr: 'Honggutan, Nanchang, Jiangxi, China',
     code: '360100',
     city: 'Nanchang'
@@ -43,10 +43,10 @@ const spots = [
   {
     name: 'Librairie Avant-Garde',
     cn: '先锋书店 (五台山店)',
-    lng: 118.760,
-    lat: 32.040,
+    lng: 118.773505,
+    lat: 32.050668,
     date: '2025-02-21',
-    photo: '/photos/03-nanjing-xianfeng-bookstore.jpg',
+    photo: 'https://cdn.jsdelivr.net/gh/DobeShadow/DobeShadow.github.io@main/docs/public/photos/03-nanjing-xianfeng-bookstore.jpg',
     addr: 'Gulou District, Nanjing, Jiangsu, China',
     code: '320106',
     city: 'Nanjing'
@@ -57,7 +57,7 @@ const spots = [
     lng: 112.961,
     lat: 28.196,
     date: '2023-07-21',
-    photo: '/photos/04-changsha-juzizhou.jpg',
+    photo: 'https://cdn.jsdelivr.net/gh/DobeShadow/DobeShadow.github.io@main/docs/public/photos/04-changsha-juzizhou.jpg',
     addr: 'Yuelu District, Changsha, Hunan, China',
     code: '430104',
     city: 'Changsha'
@@ -68,7 +68,7 @@ const spots = [
     lng: 113.974,
     lat: 27.462,
     date: '2023-07-21',
-    photo: '/photos/05-pingxiang-wugong-mountain.jpg',
+    photo: 'https://cdn.jsdelivr.net/gh/DobeShadow/DobeShadow.github.io@main/docs/public/photos/05-pingxiang-wugong-mountain.jpg',
     addr: 'Luxi County, Pingxiang, Jiangxi, China',
     code: '360323',
     city: 'Pingxiang'
@@ -76,10 +76,10 @@ const spots = [
   {
     name: 'Yellow Crane Tower',
     cn: '黄鹤楼',
-    lng: 114.305,
-    lat: 30.547,
+    lng: 114.3055,
+    lat: 30.5473,
     date: '2023-10-20',
-    photo: '/photos/06-wuhan-yellow-crane-tower.jpg',
+    photo: 'https://cdn.jsdelivr.net/gh/DobeShadow/DobeShadow.github.io@main/docs/public/photos/06-wuhan-yellow-crane-tower.jpg',
     addr: 'Wuchang District, Wuhan, Hubei, China',
     code: '420106',
     city: 'Wuhan'
@@ -87,10 +87,10 @@ const spots = [
   {
     name: 'Yugu Pavilion',
     cn: '郁孤台',
-    lng: 114.939,
-    lat: 25.839,
+    lng: 114.938609,
+    lat: 25.864944,
     date: '2024-01-27',
-    photo: '/photos/07-ganzhou-yugu-tower.jpg',
+    photo: 'https://cdn.jsdelivr.net/gh/DobeShadow/DobeShadow.github.io@main/docs/public/photos/07-ganzhou-yugu-tower.jpg',
     addr: 'Zhanggong District, Ganzhou, Jiangxi, China',
     code: '360702',
     city: 'Ganzhou'
@@ -98,10 +98,10 @@ const spots = [
   {
     name: 'Dehua Tower',
     cn: '德化楼',
-    lng: 116.001,
-    lat: 29.706,
+    lng: 115.99793,
+    lat: 29.667658,
     date: '2022-10-15',
-    photo: '/photos/08-jiujiang-dehua-tower.jpg',
+    photo: 'https://cdn.jsdelivr.net/gh/DobeShadow/DobeShadow.github.io@main/docs/public/photos/08-jiujiang-dehua-tower.jpg',
     addr: 'Xunyang District, Jiujiang, Jiangxi, China',
     code: '360403',
     city: 'Jiujiang'
