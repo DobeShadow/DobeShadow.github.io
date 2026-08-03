@@ -226,8 +226,9 @@
   padding: 0 !important;
 }
 
-/* Mapbox popup — minimal dark card */
-.map-page .mapboxgl-popup-content {
+/* Mapbox popup — minimal dark card (global, not scoped under .map-page,
+   because Mapbox injects popup wrapper into its own DOM subtree) */
+.mapboxgl-popup-content {
   background: #0e0e12;
   color: #f4f4f5;
   border-radius: 12px;
@@ -236,10 +237,10 @@
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
   font-family: var(--vp-font-family-base);
 }
-.map-page .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
   border-top-color: #0e0e12;
 }
-.map-page .mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
   border-bottom-color: #0e0e12;
 }
 .map-popup-head {
@@ -271,20 +272,21 @@
   display: block;
 }
 
-/* Map markers — MUST be global because Mapbox injects the element into its own DOM tree
-   (not in Vue template), so scoped CSS data-v selectors do not match */
-.map-page .map-dot {
+/* Map markers — GLOBAL, no .map-page prefix.
+   Mapbox injects marker element into its own DOM subtree (parent chain may not include
+   .map-page); inline styles set in JS as fallback to guarantee visibility */
+.map-dot {
   position: relative;
   width: 16px;
   height: 16px;
   border-radius: 50%;
   background: #3b82f6;
   border: 2px solid #fff;
-  box-shadow: 0 0 12px rgba(59, 130, 246, 0.9), 0 0 24px rgba(59, 130, 246, 0.4);
+  box-shadow: 0 0 14px rgba(59, 130, 246, 1), 0 0 28px rgba(59, 130, 246, 0.5);
   cursor: pointer;
-  z-index: 2;
+  z-index: 10;
 }
-.map-page .map-pulse {
+.map-pulse {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -295,7 +297,6 @@
   border-radius: 50%;
   border: 2px solid rgba(59, 130, 246, 0.6);
   animation: map-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
-  z-index: 1;
   pointer-events: none;
 }
 @keyframes map-ping {
@@ -305,7 +306,7 @@
   }
   70%,
   100% {
-    transform: scale(2.4);
+    transform: scale(2.6);
     opacity: 0;
   }
 }

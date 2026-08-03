@@ -10,7 +10,8 @@ export default defineConfig({
   appearance: true,
   head: [
     ['meta', { name: 'theme-color', content: '#18181b' }],
-    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }]
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
+    ['link', { rel: 'stylesheet', href: 'https://api.mapbox.com/mapbox-gl-js/v3.0.0/mapbox-gl.css' }]
   ],
   themeConfig: {
     logo: { light: '/logo-dark.svg', dark: '/logo-light.svg' },

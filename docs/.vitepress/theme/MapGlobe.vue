@@ -61,7 +61,22 @@ onMounted(async () => {
   markers.forEach((m) => {
     const el = document.createElement('div')
     el.className = 'map-dot'
-    el.innerHTML = '<div class="map-pulse"></div>'
+    // Inline styles as ultimate fallback so the dot is always visible
+    // regardless of CSS scoping / mapbox-gl.css availability
+    Object.assign(el.style, {
+      position: 'relative',
+      width: '16px',
+      height: '16px',
+      borderRadius: '50%',
+      background: '#3b82f6',
+      border: '2px solid #fff',
+      cursor: 'pointer',
+      boxShadow: '0 0 14px rgba(59, 130, 246, 1), 0 0 28px rgba(59, 130, 246, 0.5)',
+      zIndex: '10'
+    })
+    const pulse = document.createElement('div')
+    pulse.className = 'map-pulse'
+    el.appendChild(pulse)
     new mapboxgl.Marker({ element: el })
       .setLngLat([m.lng, m.lat])
       .setPopup(new mapboxgl.Popup({ offset: 24, closeButton: false, maxWidth: '280px' }).setHTML(popupHTML(m)))
