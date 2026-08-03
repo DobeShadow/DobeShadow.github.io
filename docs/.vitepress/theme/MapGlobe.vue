@@ -26,6 +26,7 @@ function popupHTML(m) {
 onMounted(async () => {
   if (typeof window === 'undefined') return
   const mapboxgl = (await import('mapbox-gl')).default
+  await import('mapbox-gl/dist/mapbox-gl.css')
   const token = (import.meta as any).env.VITE_MAPBOX_TOKEN
   if (!token) {
     container.value!.innerHTML =
@@ -84,36 +85,6 @@ onMounted(async () => {
 .map-container {
   width: 100%;
   height: 100%;
-}
-.map-dot {
-  position: relative;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: #3b82f6;
-  border: 2px solid #fff;
-  box-shadow: 0 0 8px rgba(59, 130, 246, 0.8);
-  cursor: pointer;
-  z-index: 2;
-}
-.map-pulse {
-  position: absolute;
-  inset: -8px;
-  border-radius: 50%;
-  border: 2px solid rgba(59, 130, 246, 0.6);
-  animation: map-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
-  z-index: 1;
-}
-@keyframes map-ping {
-  0% {
-    transform: scale(0.8);
-    opacity: 0.9;
-  }
-  70%,
-  100% {
-    transform: scale(2.2);
-    opacity: 0;
-  }
 }
 .map-hint {
   position: absolute;
