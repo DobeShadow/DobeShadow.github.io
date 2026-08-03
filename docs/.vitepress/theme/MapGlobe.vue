@@ -6,9 +6,12 @@ let map: any = null
 
 // 标记点：名字 / 经度 / 纬度 / 描述（可自行增删修改）
 const markers = [
-  { name: 'Harbin', lng: 126.63, lat: 45.80, note: 'Sample location · 哈尔滨' },
-  { name: 'Changsha', lng: 112.94, lat: 28.23, note: 'Sample location · 长沙' },
-  { name: 'Shanghai', lng: 121.47, lat: 31.23, note: 'Sample location · 上海' }
+  { name: 'Nanjing', lng: 118.80, lat: 32.06, note: '南京' },
+  { name: 'Wuhan', lng: 114.31, lat: 30.59, note: '武汉' },
+  { name: 'Changsha', lng: 112.94, lat: 28.23, note: '长沙' },
+  { name: 'Nanchang', lng: 115.86, lat: 28.68, note: '南昌' },
+  { name: 'Jingdezhen', lng: 117.18, lat: 29.27, note: '景德镇' },
+  { name: 'Ganzhou', lng: 115.93, lat: 25.83, note: '赣州' }
 ]
 
 onMounted(async () => {
