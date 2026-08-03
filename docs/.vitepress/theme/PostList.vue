@@ -11,7 +11,7 @@ const showTags = theme.value.postList?.showTags ?? true
     <article v-for="post in posts" :key="post.url" class="post-item">
       <a :href="post.url" class="post-link">
         <h3 class="post-title">{{ post.title }}</h3>
-        <p v-if="post.excerpt" class="post-excerpt">{{ post.excerpt }}</p>
+        <p v-if="post.excerpt" class="post-excerpt" v-html="post.excerpt"></p>
         <div class="post-meta">
           <time v-if="post.date" class="post-date">{{ post.date }}</time>
           <span v-if="showTags && post.tags.length" class="post-tags">
