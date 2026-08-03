@@ -4,29 +4,16 @@ import { onMounted, ref } from 'vue'
 const container = ref<HTMLElement>()
 let map: any = null
 
-// 城市区域：名字 / 经度 / 纬度 / 高亮半径(km) / 日期 / 照片URL / 一句话（date/photo/text 可留空）
+// 城市：英文名 / 边界数据文件（docs/public/geo/）/ 日期 / 照片URL / 一句话（date/photo/text 可留空）
 const cities = [
-  { name: 'Nanjing', lng: 118.80, lat: 32.06, radius: 40, date: '', photo: '', text: '' },
-  { name: 'Wuhan', lng: 114.31, lat: 30.59, radius: 45, date: '', photo: '', text: '' },
-  { name: 'Changsha', lng: 112.94, lat: 28.23, radius: 40, date: '', photo: '', text: '' },
-  { name: 'Nanchang', lng: 115.86, lat: 28.68, radius: 40, date: '', photo: '', text: '' },
-  { name: 'Jiujiang', lng: 115.97, lat: 29.71, radius: 35, date: '', photo: '', text: '' },
-  { name: 'Jingdezhen', lng: 117.18, lat: 29.27, radius: 35, date: '', photo: '', text: '' },
-  { name: 'Ganzhou', lng: 115.93, lat: 25.83, radius: 40, date: '', photo: '', text: '' }
+  { name: 'Nanjing', file: 'Nanjing', date: '', photo: '', text: '' },
+  { name: 'Wuhan', file: 'Wuhan', date: '', photo: '', text: '' },
+  { name: 'Changsha', file: 'Changsha', date: '', photo: '', text: '' },
+  { name: 'Nanchang', file: 'Nanchang', date: '', photo: '', text: '' },
+  { name: 'Jiujiang', file: 'Jiujiang', date: '', photo: '', text: '' },
+  { name: 'Jingdezhen', file: 'Jingdezhen', date: '', photo: '', text: '' },
+  { name: 'Ganzhou', file: 'Ganzhou', date: '', photo: '', text: '' }
 ]
-
-// 以城市为中心生成近圆形多边形（每边约 1.1 倍经度/纬度换算）
-function circlePolygon(lng, lat, radiusKm, points = 36) {
-  const dLat = radiusKm / 110.574
-  const dLng = radiusKm / (111.32 * Math.cos((lat * Math.PI) / 180))
-  const coords = []
-  for (let i = 0; i < points; i++) {
-    const a = (i / points) * 2 * Math.PI
-    coords.push([lng + dLng * Math.cos(a), lat + dLat * Math.sin(a)])
-  }
-  coords.push(coords[0]) // 闭合
-  return coords
-}
 
 function popupHTML(m) {
   const photo = m.photo
@@ -52,17 +39,17 @@ onMounted(async () => {
     container: container.value!,
     style: 'mapbox://styles/mapbox/dark-v11',
     projection: 'globe',
-    zoom: 2.6,
+    zoom: 2.8,
     center: [114.5, 29.5],
     minZoom: 1,
-    maxZoom: 9,
+    maxZoom: 10,
     pitch: 0,
     attributionControl: false
   })
   map.addControl(new mapboxgl.NavigationControl(), 'bottom-right')
   map.addControl(new mapboxgl.ScaleControl({ unit: 'metric' }), 'bottom-left')
 
-  map.on('style.load', () => {
+  map.on('style.load', async () => {
     ;(map as any).setFog({
       color: 'rgb(10, 12, 20)',
       'high-color': 'rgb(20, 24, 40)',
@@ -71,39 +58,45 @@ onMounted(async () => {
       'star-intensity': 0.8
     })
 
-    // GeoJSON：每个城市一个高亮区域
-    const geojson = {
-      type: 'FeatureCollection',
-      features: cities.map((c) => ({
-        type: 'Feature',
-        geometry: {
-          type: 'Polygon',
-          coordinates: [circlePolygon(c.lng, c.lat, c.radius)]
-        },
-        properties: { name: c.name, lng: c.lng, lat: c.lat }
-      }))
+    // 加载城市行政边界 GeoJSON（阿里 DataV，docs/public/geo/）
+    let features = []
+    try {
+      const results = await Promise.all(
+        cities.map((c) => fetch(`/geo/${c.file}.json`).then((r) => r.json()))
+      )
+      features = results.flatMap((fc, i) =>
+        fc.features.map((f) => ({
+          ...f,
+          properties: { ...f.properties, cityKey: cities[i].name }
+        }))
+      )
+    } catch (e) {
+      console.error('Failed to load city boundaries', e)
     }
 
-    map.addSource('city-zones', { type: 'geojson', data: geojson })
+    map.addSource('city-zones', {
+      type: 'geojson',
+      data: { type: 'FeatureCollection', features }
+    })
 
-    // 区域填充（半透明蓝）
+    // 区域填充（半透明蓝，按真实行政区划）
     map.addLayer({
       id: 'city-fill',
       type: 'fill',
       source: 'city-zones',
       paint: {
         'fill-color': '#3b82f6',
-        'fill-opacity': 0.22
+        'fill-opacity': 0.25
       }
     })
-    // 区域描边
+    // 区域描边（城市规划线）
     map.addLayer({
       id: 'city-line',
       type: 'line',
       source: 'city-zones',
       paint: {
         'line-color': '#60a5fa',
-        'line-width': 1.5,
+        'line-width': 1.2,
         'line-opacity': 0.9
       }
     })
@@ -113,7 +106,7 @@ onMounted(async () => {
       type: 'symbol',
       source: 'city-zones',
       layout: {
-        'text-field': ['get', 'name'],
+        'text-field': ['get', 'cityKey'],
         'text-size': 12,
         'text-letter-spacing': 0.05
       },
@@ -128,10 +121,11 @@ onMounted(async () => {
     map.on('click', 'city-fill', (e) => {
       if (!e.features || !e.features.length) return
       const f = e.features[0]
-      const city = cities.find((c) => c.name === f.properties.name)
+      const city = cities.find((c) => c.name === f.properties.cityKey)
       if (!city) return
+      const center = f.properties.center || f.properties.centroid || [city.lng, city.lat]
       new mapboxgl.Popup({ closeButton: false, maxWidth: '280px' })
-        .setLngLat([city.lng, city.lat])
+        .setLngLat(center)
         .setHTML(popupHTML(city))
         .addTo(map)
     })
