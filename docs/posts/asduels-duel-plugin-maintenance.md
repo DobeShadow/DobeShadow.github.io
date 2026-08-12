@@ -10,6 +10,21 @@ AsDuels 是一个面向 Paper/Spigot 1.21+ 的 1v1 决斗插件。我以「重�
 
 <!-- more -->
 
+## The version history: 1.0.0 → 1.0.6 → 2.0+
+
+The plugin started as the official release on Modrinth (**1.0.0**, by ItzAzeem). From there I forked a private maintenance line:
+
+本插件最初是 Modrinth 上的官方版（**1.0.0**，作者 ItzAzeem）。我在其基础上维护了一条私有分支线：
+
+- **1.0.1 → 1.0.6** — patching the official build: bug fixes, points/rank system, full language file, security hardening, anti-farm mechanics.
+- **1.0.1 → 1.0.6** — 修补官方版本：修 Bug、加积分/段位系统、完整语言文件、安全加固、防刷机制。
+- **2.0+** — a clean break: I rebased the codebase into my own major line. Everything after 2.0 is independent of upstream, including the queue GUI, forfeit & draw mechanics, daily win cap, loss-streak cooldown, and anticheat/packet integration.
+- **2.0+** — 独立大版本：代码重构为自己的主版本线。2.0 之后的所有内容都与上游无关，包括观战 GUI、认输/平局机制、每日赢分上限、连败冷却、反作弊与封包拦截。
+
+A one-line summary of the timeline: `官方 1.0.0 → 本地修补 1.0.1~1.0.6 → 独立维护 2.0~2.24`.
+
+时间线一句话总结：`官方 1.0.0 → 本地修补 1.0.1~1.0.6 → 独立维护 2.0~2.24`。
+
 ## Why maintain someone else's plugin?
 
 My survival server MINEMC runs a duel arena where players challenge each other, climb ranks, and earn daily rewards. The original AsDuels worked, but real servers always hit edge cases the author never tested:
