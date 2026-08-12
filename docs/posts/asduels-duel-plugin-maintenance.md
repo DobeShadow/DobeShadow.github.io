@@ -1,6 +1,6 @@
 ---
 title: "AsDuels: Maintaining a Minecraft Duel Plugin"
-date: 2026-08-10 21:00:00
+date: 2026-08-12 21:00:00
 tags: [Minecraft, Java, Development, Plugin]
 ---
 
