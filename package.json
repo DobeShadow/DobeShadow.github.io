@@ -12,6 +12,7 @@
     "vitepress": "^1.6.3"
   },
   "dependencies": {
-    "mapbox-gl": "^3.27.0"
+    "mapbox-gl": "^3.27.0",
+    "minisearch": "^7.1.0"
   }
 }
