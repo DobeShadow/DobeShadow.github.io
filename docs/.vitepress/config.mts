@@ -11,7 +11,9 @@ export default defineConfig({
   head: [
     ['meta', { name: 'theme-color', content: '#18181b' }],
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
-    ['link', { rel: 'stylesheet', href: 'https://api.mapbox.com/mapbox-gl-js/v3.0.0/mapbox-gl.css' }]
+    ['link', { rel: 'stylesheet', href: 'https://api.mapbox.com/mapbox-gl-js/v3.0.0/mapbox-gl.css' }],
+    ['link', { rel: 'stylesheet', href: 'https://fonts.cdnfonts.com/css/minecraft-4' }],
+    ['link', { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap' }]
   ],
   themeConfig: {
     logo: { light: '/logo-dark.svg', dark: '/logo-light.svg' },
