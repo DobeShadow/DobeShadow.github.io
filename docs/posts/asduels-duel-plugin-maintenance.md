@@ -10,7 +10,7 @@ AsDuels 是一个面向 Paper/Spigot 1.21+ 的 1v1 决斗插件。我以「重�
 
 <!-- more -->
 
-## Why maintain someone else's plugin? | 为什么维护别人的插件？
+## Why maintain someone else's plugin?
 
 My survival server MINEMC runs a duel arena where players challenge each other, climb ranks, and earn daily rewards. The original AsDuels worked, but real servers always hit edge cases the author never tested:
 
@@ -28,7 +28,7 @@ These are exactly the bugs that only appear after a feature ships to hundreds of
 
 这些正是功能上线、面对几百个玩家之后才会暴露的 Bug。
 
-## The hardest bug: arena stuck forever | 最棘手的 Bug：竞技场永久卡死
+## The hardest bug: arena stuck forever
 
 The original `endMatch()` did:
 
@@ -62,7 +62,7 @@ Plus an idempotent `forceCleanup()` as a safety net for any `ENDING` leftovers. 
 
 另外加了幂等的 `forceCleanup()` 兜底，专门清理一切 `ENDING` 残留。教训：**绝不能让奖励/副作用失败污染核心状态流转。**
 
-## Anti-farm: daily win cap + loss streak cooldown | 防刷：每日赢分上限 + 连败冷却
+## Anti-farm: daily win cap + loss streak cooldown
 
 Points power the rank ladder (流浪者 → 屠龙者). Two farm vectors needed countermeasures:
 
@@ -80,7 +80,7 @@ A timezone bug taught me something: I first computed "today" with `LocalDate.now
 
 一个时区 Bug 也给我上了课：我一开始用 `LocalDate.now()`（服务器时区）算"今天"。在非北京时区的服务器上，"昨天"的赢分会漏进"今天"，玩家打一把就撞上限。改成 `ZoneId.of("Asia/Shanghai")` 后解决。**基于时间逻辑必须钉死一个明确时区。**
 
-## Anticheat: don't fight the client, intercept the packet | 反作弊：别跟客户端较劲，去拦截数据包
+## Anticheat: don't fight the client, intercept the packet
 
 The duel arena PvP tripped **Vulcan** into kicking players — which re-triggered the stuck-match bug. The clean solution was a `VulcanFlagEvent` listener that cancels every flag raised by an in-match player. Anticheat stays fully active outside the arena.
 
@@ -100,13 +100,13 @@ Now spectators can only follow the two players inside their own match. **When th
 
 现在旁观者只能跟随本场竞技场里的两名选手。**当行为由客户端主导时，服务器必须掌控网络层。**
 
-## Respecting player inventory | 尊重玩家背包
+## Respecting player inventory
 
 A kit plugin that returns your inventory wrongly is a data-loss bug. I fixed `startMatch` to create the `Match` and call `saveInventory()` *before* clearing the player's inventory — the original cleared first and never saved, so restore gave back an empty inventory. Small ordering fix, huge trust win.
 
 一个会还错背包的 Kit 插件就是数据丢失事故。我修了 `startMatch`，让它在清空玩家背包**之前**就创建 `Match` 并调用 `saveInventory()`——原版是先清空再保存，导致还原时还回一个空背包。一个顺序问题，却是信任的胜负手。
 
-## What I'd do differently | 如果能重来
+## What I'd do differently
 
 - **Write tests early.** Packet interception and match-state transitions are prime test territory.
 - **Instrument first.** A simple `/ad end` admin escape hatch saved us repeatedly; add a debug command before you need it.
@@ -115,7 +115,3 @@ A kit plugin that returns your inventory wrongly is a data-loss bug. I fixed `st
 - **早点写测试。** 封包拦截和比赛状态流转是最该被测试覆盖的地方。
 - **先埋点。** 一个简单的 `/ad end` 管理逃生门救了我们很多次；在你需要之前就把调试命令加好。
 - **配置即 API。** 所有防刷旋钮（`daily-win-points-limit`、`loss-streak-cooldown`、`loss-cooldown-minutes`）都是配置驱动，不用重编译就能调参。
-
-The full changelog lives in the plugin's `更新说明.md`. If you run a 1.21+ server and want a hardened duel plugin, AsDuels is a great starting point — just expect to meet its edge cases.
-
-完整变更日志在插件的 `更新说明.md` 里。如果你也在跑 1.21+ 服务器、想要一个打磨过的决斗插件，AsDuels 是不错的起点——只是要做好迎接它边界情况的准备。
