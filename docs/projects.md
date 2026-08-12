@@ -12,7 +12,7 @@ Most of my projects are **Minecraft plugins** — built with Paper/Bukkit, desig
 1v1 duel plugin with ranks, points, daily rewards and anti-farm protection.
 
 - **Tech**: Java, Paper API
-- **Features**: 1v1 matches, matchmaking queue, rank ladder (流浪者 → 屠龙者), daily rewards, daily win cap, loss-streak cooldown, spectator mode, anticheat & packet-level spectator protection
+- **Features**: 1v1 matches, matchmaking queue, rank ladder, daily rewards, daily win cap, loss-streak cooldown, spectator mode, anticheat & packet-level spectator protection
 - [GitHub](https://github.com/DobeShadow/AsDuels)
 
 ## DsBoss
