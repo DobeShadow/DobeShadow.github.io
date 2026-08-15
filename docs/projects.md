@@ -35,4 +35,12 @@ Lightweight team system with PvP protection, summon and GUI.
 - **Features**: teams up to 6 players, member summon, team chat
 - [GitHub](https://github.com/DobeShadow/DsTeam)
 
+## DsBorder
+
+Per-world border reminder — ActionBar warnings when players step outside a configured radius, without blocking.
+
+- **Tech**: Java, Paper API
+- **Features**: per-world center/shape/radius config, square & circle, non-blocking ActionBar reminders, safe-zone return notice, hot-reload
+- [GitHub](https://github.com/DobeShadow/DsBorder)
+
 More projects to come as I explore materials research tooling and data analysis.
