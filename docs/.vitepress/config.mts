@@ -13,6 +13,10 @@ export default defineConfig({
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
     ['link', { rel: 'stylesheet', href: 'https://api.mapbox.com/mapbox-gl-js/v3.0.0/mapbox-gl.css' }]
   ],
+  markdown: {
+    // IntelliJ IDEA style (Darcula) code highlighting
+    theme: 'one-dark-pro'
+  },
   themeConfig: {
     logo: { light: '/logo-dark.svg', dark: '/logo-light.svg' },
     nav: [

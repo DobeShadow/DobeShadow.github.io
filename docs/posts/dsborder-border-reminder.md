@@ -31,13 +31,17 @@ My server MINEMC runs a large survival world where players build bases and run f
 ## Usage
 
 ```
-  &8Ds&fBorder &8- &7边界提醒
-  &7命令: &f/dsborder &8[...]
-  &7参数:
-    &8- &freload   &7重载配置文件
-    &8- &finfo   &7查看当前世界边界设置
-    &8- &ftest   &7手动触发一次提醒
+  DsBorder - 边界提醒
+  命令: /dsborder [...]
+  参数:
+    - reload   重载配置文件
+    - info   查看当前世界边界设置
+    - test   手动触发一次提醒
 ```
+
+(In-game the help uses Minecraft color codes; the plain text above is for readability.)
+
+（游戏内实际展示带 `&8`/`&f` 等颜色代码，这里为便于阅读省略。）
 
 ## Config
 
