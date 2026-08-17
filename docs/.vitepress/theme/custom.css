@@ -356,3 +356,8 @@
 .map-pin svg {
   display: block;
 }
+
+/* Blog images: indicate click-to-zoom */
+.vp-doc img {
+  cursor: zoom-in;
+}
