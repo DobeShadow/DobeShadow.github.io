@@ -5,9 +5,13 @@ description: Open source projects by DobeShadow
 
 # Projects
 
-Most of my projects are **Minecraft plugins** — built with Paper/Bukkit, designed to run on my server and shared openly on GitHub.
+我的项目目前分为三类：**Java** 方向的 Minecraft 插件、**AI 插件**（DSH / AI 工具插件）和 **电催化**项目。均开放共享在 GitHub 上。
 
-## AsDuels
+## Java
+
+基于 Paper/Bukkit 与 Nukkit 的 Minecraft 插件，主要跑在我的服务器 MINEMC 上。
+
+### AsDuels
 
 1v1 duel plugin with ranks, points, daily rewards and anti-farm protection. Personal server maintenance & updates only.
 
@@ -19,7 +23,7 @@ Most of my projects are **Minecraft plugins** — built with Paper/Bukkit, desig
 - **Features**: 1v1 matches, matchmaking queue, rank ladder, daily rewards, daily win cap, loss-streak cooldown, spectator mode, anticheat & packet-level spectator protection
 - [GitHub](https://github.com/DobeShadow/AsDuels)
 
-## DsBoss
+### DsBoss
 
 Configurable boss plugin with timed spawns and server-wide broadcasts.
 
@@ -27,7 +31,7 @@ Configurable boss plugin with timed spawns and server-wide broadcasts.
 - **Features**: scheduled spawns, boss bars, potion effects, admin commands
 - [GitHub](https://github.com/DobeShadow/DsBoss)
 
-## DsTeam
+### DsTeam
 
 Lightweight team system with PvP protection, summon and GUI.
 
@@ -35,7 +39,7 @@ Lightweight team system with PvP protection, summon and GUI.
 - **Features**: teams up to 6 players, member summon, team chat
 - [GitHub](https://github.com/DobeShadow/DsTeam)
 
-## DsBorder
+### DsBorder
 
 Per-world border reminder — ActionBar warnings when players step outside a configured radius, without blocking.
 
@@ -43,7 +47,11 @@ Per-world border reminder — ActionBar warnings when players step outside a con
 - **Features**: per-world center/shape/radius config, square & circle, non-blocking ActionBar reminders, safe-zone return notice, hot-reload
 - [GitHub](https://github.com/DobeShadow/DsBorder)
 
-## dsh-sound-alerts
+## AI 插件
+
+面向 DSH（Deepseek Harness）等 AI 编码工具的插件，扩展对话与工具的工作流能力。
+
+### dsh-sound-alerts
 
 DSH plugin that plays notification sounds for task completion / permission requests / errors — host-side events are pushed to the web client and played without blocking the conversation (task complete = pleasant ascending tone, permission ready = double-tone attention, error = descending warning). Sounds on by default, controllable from the panel.
 
@@ -52,7 +60,7 @@ DSH 插件：任务完成 / 权限请求 / 出错的提示音——host 监听�
 - **Tech**: Node.js, DSH cordis plugin
 - **Features**: per-kind sound mapping, global mute & per-category toggles, `sound_alert_status` query tool
 
-## dsh-session-history
+### dsh-session-history
 
 DSH web plugin that keeps a persistent "past conversations" panel on the left of the conversation view — browse previous sessions by title, first-message excerpt and time; click any entry to open it and jump straight to its first user message.
 
@@ -61,4 +69,8 @@ DSH web 插件：在对话界面左侧提供常驻的「历史会话」面板，
 - **Tech**: Node.js, DSH cordis plugin
 - **Features**: persistent sidebar panel, session list with excerpts & timestamps, one-click jump to first user message
 
-More projects to come as I explore materials research tooling and data analysis.
+## 电催化项目
+
+材料与化工方向（电催化、生物质转化）的科研工具与项目，正在积累中，敬请期待。
+
+_TBD — 暂无公开项目。_
