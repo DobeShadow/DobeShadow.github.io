@@ -5,9 +5,9 @@ description: Open source projects by DobeShadow
 
 # Projects
 
-我的项目目前分为三类：**Java** 方向的 Minecraft 插件、**AI 插件**（DSH / AI 工具插件）和 **电催化**项目。均开放共享在 GitHub 上。
+我的项目目前分为三类：**Minecraft Java Plugins**（Minecraft 插件）、**AI Plugins**（DSH / AI 工具插件）和 **Electrocatalysis Projects**。均开放共享在 GitHub 上。
 
-## Java
+## Minecraft Java Plugins
 
 基于 Paper/Bukkit 与 Nukkit 的 Minecraft 插件，主要跑在我的服务器 MINEMC 上。
 
@@ -47,7 +47,7 @@ Per-world border reminder — ActionBar warnings when players step outside a con
 - **Features**: per-world center/shape/radius config, square & circle, non-blocking ActionBar reminders, safe-zone return notice, hot-reload
 - [GitHub](https://github.com/DobeShadow/DsBorder)
 
-## AI 插件
+## AI Plugins
 
 面向 DSH（Deepseek Harness）等 AI 编码工具的插件，扩展对话与工具的工作流能力。
 
@@ -69,7 +69,7 @@ DSH web 插件：在对话界面左侧提供常驻的「历史会话」面板，
 - **Tech**: Node.js, DSH cordis plugin
 - **Features**: persistent sidebar panel, session list with excerpts & timestamps, one-click jump to first user message
 
-## 电催化项目
+## Electrocatalysis Projects
 
 材料与化工方向（电催化、生物质转化）的科研工具与项目，正在积累中，敬请期待。
 
