@@ -7,7 +7,7 @@ description: About DobeShadow
 
 Hi, I'm **DobeShadow** — a Materials &amp; Chemical Engineering student preparing for graduate school, with a side hustle as a self-taught programmer who builds Minecraft plugins.
 
-大家好，我是 **DobeShadow** —— 一名正在准备读研的材料化工学生，同时也是一名自学成才的程序员，业余为我的 Minecraft 服务器写插件。
+大家好，我是**余枫**（DobeShadow）—— 一名正在准备读研的材料化工学生，同时也是一名自学成才的程序员，业余为我的 Minecraft 服务器写插件。
 
 ## Research Direction
 
