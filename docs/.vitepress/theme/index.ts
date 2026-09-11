@@ -3,6 +3,7 @@ import Layout from './Layout.vue'
 import PostList from './PostList.vue'
 import ProfileCard from './ProfileCard.vue'
 import MapGlobe from './MapGlobe.vue'
+import EncryptedContent from './EncryptedContent.vue'
 import './custom.css'
 
 export default {
@@ -12,5 +13,6 @@ export default {
     app.component('PostList', PostList)
     app.component('ProfileCard', ProfileCard)
     app.component('MapGlobe', MapGlobe)
+    app.component('EncryptedContent', EncryptedContent)
   }
 }

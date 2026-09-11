@@ -23,8 +23,9 @@ export default defineConfig({
       { text: 'Home', link: '/' },
       { text: 'About', link: '/about' },
       { text: 'Posts', link: '/posts' },
-      { text: 'Projects', link: '/projects' },
-      { text: 'Map', link: '/map' }
+      { text: 'Projects', link: '/projects' }
+      // Map 暂时隐藏：恢复时取消下一行注释即可
+      // { text: 'Map', link: '/map' }
     ],
     footer: {
       message: 'Built with VitePress',

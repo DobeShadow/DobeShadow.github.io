@@ -15,12 +15,17 @@ export default createContentLoader('posts/*.md', {
       .filter((p) => p.url !== '/posts/')
       .filter((p) => !p.frontmatter.draft)
       .sort((a, b) => +new Date(b.frontmatter.date) - +new Date(a.frontmatter.date))
-      .map((p) => ({
-        title: p.frontmatter.title || p.url,
-        date: formatDate(p.frontmatter.date),
-        tags: p.frontmatter.tags || [],
-        excerpt: p.excerpt || '',
-        url: p.url
-      }))
+      .map((p) => {
+        const isPrivate = Boolean(p.frontmatter.private)
+        return {
+          title: p.frontmatter.title || p.url,
+          date: formatDate(p.frontmatter.date),
+          tags: p.frontmatter.tags || [],
+          // 私密文章不在列表暴露摘要
+          excerpt: isPrivate ? '' : p.excerpt || '',
+          url: p.url,
+          private: isPrivate
+        }
+      })
   }
 })

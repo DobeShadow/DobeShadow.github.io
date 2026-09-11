@@ -9,7 +9,21 @@ const showTags = theme.value.postList?.showTags ?? true
 <template>
   <div class="post-list">
     <article v-for="post in posts" :key="post.url" class="post-item">
-      <a :href="post.url" class="post-link">
+      <!-- 私密文章：只显示标题，不可点开 -->
+      <div v-if="post.private" class="post-link post-link-private" :aria-disabled="true">
+        <h3 class="post-title">
+          <span class="lock" title="仅作者可见">🔒</span>
+          {{ post.title }}
+        </h3>
+        <p class="private-hint">私密 · 仅作者可读</p>
+        <div class="post-meta">
+          <time v-if="post.date" class="post-date">{{ post.date }}</time>
+          <span v-if="showTags && post.tags.length" class="post-tags">
+            <span v-for="tag in post.tags" :key="tag" class="tag">#{{ tag }}</span>
+          </span>
+        </div>
+      </div>
+      <a v-else :href="post.url" class="post-link">
         <h3 class="post-title">{{ post.title }}</h3>
         <p v-if="post.excerpt" class="post-excerpt" v-html="post.excerpt"></p>
         <div class="post-meta">
@@ -43,11 +57,27 @@ const showTags = theme.value.postList?.showTags ?? true
 .post-link:hover {
   padding-left: 10px;
 }
+.post-link-private {
+  cursor: default;
+  opacity: 0.85;
+}
+.post-link-private:hover {
+  padding-left: 4px;
+}
 .post-title {
   margin: 0 0 6px;
   font-size: 1.15rem;
   font-weight: 500;
   color: var(--vp-c-text-1);
+}
+.lock {
+  font-size: 0.9em;
+  margin-right: 4px;
+}
+.private-hint {
+  margin: 0 0 8px;
+  font-size: 0.85rem;
+  color: var(--vp-c-text-3);
 }
 .post-excerpt {
   margin: 0 0 8px;
